@@ -1,0 +1,17 @@
+import React from 'react';
+
+import TodayContainer from '../containers/TodayContainer';
+
+const Today = () => {
+    return(
+        <div>
+            <p>
+                Content 영역
+             {/* <TodayTab2 /> */}
+             <TodayContainer    />
+            </p>
+        </div>
+    );
+};
+
+export default Today;

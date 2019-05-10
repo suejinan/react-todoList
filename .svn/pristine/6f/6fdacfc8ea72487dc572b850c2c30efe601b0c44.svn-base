@@ -1,0 +1,66 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import TodoList from '../components/Todo/TodoList';
+import * as todoActions from '../actions/todo';
+import * as modalActions from '../actions/modal'
+
+class TodoContainer extends Component{
+    render(){
+        return(
+            <div>
+                <TodoList
+                    onCreateTodo={this.props.onCreateTodo}
+                    todoList={this.props.todoList}
+                    handleToggle={this.props.handleToggle}
+                    onRemove={this.props.onRemoveTodo}
+                    groupName={this.props.groupName}
+                    removeAllTodos={this.props.removeAllTodos}
+                    toggleModal={this.props.toggleModal}
+                    setEditItem={this.props.setEditItem}
+                    handleSubToggle={this.props.handleSubToggle}
+                    removeSubTodoItem={this.props.removeSubTodoItem}
+                />
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = (state) => ({
+    todoList: state.todoReducers.groupTodos,
+    groupName:state.todoReducers.groupName
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onCreateTodo: (todo) => {
+        dispatch(todoActions.addTodoItem(todo))
+    },
+    handleToggle: (todoId) => {
+        dispatch(todoActions.handleToggle(todoId))
+    },
+    onRemoveTodo: (todoId) => {
+        dispatch(todoActions.removeTodoItem(todoId))
+    },
+    removeAllTodos: (todos) => {
+        dispatch(todoActions.removeAllTodos(todos))
+    },
+    toggleModal: () => {
+        dispatch(modalActions.toggleModal())
+    },
+    setEditItem: (todoId) => {
+        dispatch(modalActions.setEditItem(todoId));
+    },
+    handleSubToggle: (todo) => {
+        dispatch(todoActions.handleSubToggle(todo))
+    },
+    removeSubTodoItem: (todo) => {
+        dispatch(todoActions.removeSubTodoItem(todo))
+    },
+});
+
+const TodoFormContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TodoContainer);
+
+export default TodoFormContainer;

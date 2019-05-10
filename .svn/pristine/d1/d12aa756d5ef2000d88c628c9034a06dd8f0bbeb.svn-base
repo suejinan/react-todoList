@@ -1,0 +1,31 @@
+import React, { Component } from 'react';
+import {connect} from 'react-redux';
+
+const mapStateToProps = state => ({    
+    ...state
+})
+
+class GroupList extends Component {
+    render() {    
+ //       console.log("현재 props 값들 : " + JSON.stringify(this.props))
+      return (
+          <div>
+              {this.props.groupReducers.groups.map((groups) => {
+                  return(<GroupListItem text={groups.text} />);
+              })}
+          </div>
+      );
+    }
+}
+
+class GroupListItem extends Component{
+    render() {
+        return(
+            <div>
+                {this.props.text}
+            </div>
+        );
+    }
+}
+
+export default connect(mapStateToProps)(GroupList);

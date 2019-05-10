@@ -1,0 +1,89 @@
+import React, { Component } from 'react';
+
+import TodoForm from './TodoForm';
+import TodoItem from './TodoItem';
+
+class TodoList extends Component{
+    state = {
+        todoValue: ''
+    };
+
+    /**
+     * Enter Key 이벤트
+     */
+    onKeyPress = (e) => {
+        if(e.key === 'Enter'){
+            this.onCreateTodo();
+        }
+    }
+
+    /**
+     * 할 일 값 핸들링
+     */
+    handleTodoItem = (e) => {
+        this.setState({
+            todoValue: e.target.value
+        });
+    }
+
+    /**
+     * 할 일 추가 
+     */
+    onCreateTodo = () => {
+        this.props.onCreateTodo(this.state.todoValue);
+        this.setState({
+            todoValue: ''
+        });
+    }
+
+    /**
+     * 할 일 내용 영역 토글 
+     */
+    handleToggle = (todoId) => {
+        this.props.handleToggle(todoId);
+    }
+
+    /**
+     * 할 일 삭제
+     */
+    onRemove = (todoId) => {
+        this.props.onRemove(todoId);
+    }
+
+    render(){
+        const { todoValue } = this.state;
+        const { handleTodoItem, onCreateTodo, onKeyPress, handleToggle, onRemove } = this;
+        const { todoList } = this.props;
+
+        return(
+            <div>
+                {/* 추가한 할 일 리스트*/}
+                <div className="todo-list-box">
+                    {
+                        todoList.map(
+                            ({id, text, checked}) => (
+                                <TodoItem
+                                    key={id}
+                                    todoId={id}
+                                    text={text}
+                                    onToggle={handleToggle}
+                                    checked={checked}
+                                    onRemove={onRemove}
+                                />
+                            )
+                        )
+                    }
+                </div>
+                {/* 할 일 추가 폼 */}
+                <TodoForm
+                    value={todoValue}
+                    onChange={handleTodoItem}
+                    onCreate={onCreateTodo}
+                    onKeyPress={onKeyPress}
+                />
+            </div>
+        )
+    }
+}
+
+export default TodoList;

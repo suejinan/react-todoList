@@ -1,0 +1,15 @@
+import React, {Component} from 'react';
+import TodayTab  from './TodayTab';
+const Test = () => {
+    return(
+        <div>
+            <h2>Test</h2>
+            <p>
+                Content 영역
+                <TodayTab />
+            </p>
+        </div>
+    );
+};
+
+export default Test;

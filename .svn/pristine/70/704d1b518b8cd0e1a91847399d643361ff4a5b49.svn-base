@@ -1,0 +1,96 @@
+import React, {Component} from 'react';
+import SubTodayTab from './SubTodayTab';
+
+const style1 = {
+    width: '600px',
+    display: 'inline'  
+}
+const style2 = {
+    display: 'inline',
+    width: '30px',
+    height: '30px',
+    background: 'lightgray',
+    marginLeft: '10px',
+    color: '#333'
+}
+const style3 = {
+    display: 'inline',
+    width: '30px',
+    height: '35px',
+    marginLeft: '-31px',
+    marginBottom: '5px'
+}
+
+class TodayTab extends Component {    
+   
+        state = {
+         holders: ''    
+        };
+     
+    handleKeyPress = e => {
+        if(e.key === 'Enter') {
+          this.handleSubmit(e);
+        };
+    }
+    handleSubmit = e => {
+          
+         this.setState({holders: e.target.holders});
+      }
+
+    add = () => {       
+        this.props.add(this.state.holders);
+        this.setState({
+          holders: ''
+        });
+    }    
+    subAdd = () => {       
+        this.setState({
+            Items: this.state.Items.concat([{ subItem: "" }])
+        });
+    }
+     handleChange = e => {
+         if(e.target.name === "holders") {
+             this.setState({holders: e.target.value});
+         }
+     };
+    handleRemoveShareholder = e => () => {
+        this.setState({
+            holders: this.state.holders.filter((s, sidx) => e !== sidx)
+        });
+  
+    };
+    handleRemove = e => () => {
+        this.setState({
+            Items: this.state.Items.filter((s, sidx) => e !== sidx)
+        })
+    }
+    
+    render(){          
+        return(                  
+            <div className="form-group">
+            <div>
+            <td></td>     
+            <form onSubmit = {this.handleSubmit}>        
+                <div>
+                <input type="text" value = {this.state.holders} className ="form-control" style={style1} float ="left" placeholder = "Today Task.." onSubmit = {this.handleSubmit} onKeyPress = {this.handleKeyPress}/>
+                <input type="button" name="name" className="btn" value="V" onAddSubItem={this.handleSubmit} style = {style3} onClick = {this.subAdd}/>  
+                <button type="button"  className="btn" style = {style2}>-</button>
+              <td></td>                                                 
+                </div>  
+              <div>
+                  <SubTodayTab onAddSubItem = {this.props.onAddSubItem}/>
+              </div>                                            
+              <div>                                                                       
+              <button type = "button" onClick = {this.add} className="btn btn-outline-primary" padding = "5px" marginRight = "50px">작업추가</button>
+              <button type = "button" onAddSubItem= {this.props.handleSubmit} className = "btn" padding = "5px" marginLeft = "100px" >Submit</button>
+              </div>
+              </form>
+           </div>
+           </div>
+
+            
+        );
+    }
+}
+
+export default TodayTab;

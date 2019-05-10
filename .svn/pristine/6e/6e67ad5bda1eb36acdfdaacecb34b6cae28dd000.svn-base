@@ -1,0 +1,82 @@
+import * as types from '../actions/todo';
+import { CREATE_ITEM_MODAL } from '../actions/modal';
+import { CREATE_ITEM_DATE } from '../actions/week';
+
+/**
+ * todo 컴포넌트 Reducer
+ */
+
+let todoId = 1
+const initialState = {
+    /**
+     * todos 객체 프로퍼티 값
+     * 
+     * - id: 할 일 id,
+     * - text: 할 일 내용
+     * - checked: 할 일 체크 여부
+     * - subText: 서브 할 일 내용
+     * - group: 할 일 그룹
+     * - date: 할 일 날짜
+     * - memo: 할 일 메모
+     */
+    todos: [
+            {   id: 0, text: '이 것은 할 일 입니다.', checked: false, 
+                subText: [{id: 0, text:'', checked: false}], 
+                group: 0,
+                date: '2019-04-17', memo: ''
+            }
+    ]
+};
+
+const todoReducer = (state = initialState, action) => {
+    const {todos} = state;
+
+    switch(action.type){
+        case types.ADD_TODO_ITEM :
+            return {
+                todos: state.todos.concat({
+                    id: todoId++,
+                    text: action.todo
+                })
+            };
+        case types.HANDLE_TOGGLE :
+            const index = todos.findIndex(todoItem => todoItem.id === action.todoId);
+            const selected = todos[index];   //선택한 할 일 객체
+
+            const nextTodoList = [...todos]; // todoList 배열 복사
+            nextTodoList[index] = {
+                ...selected,
+                checked: !selected.checked
+            };
+
+            return {
+                todos: nextTodoList
+            };
+        case types.REMOVE_TODO_ITEM :
+            return {
+                todos: todos.filter(todo => todo.id !== action.todoId)
+            }
+
+        // Create Item (Modal)
+        case CREATE_ITEM_MODAL: 
+            return {
+                todos: todos.concat({
+                    ...action.item,
+                    id: todoId++,
+                    checked: false,
+                })
+            }
+        case CREATE_ITEM_DATE:
+            return {
+                todos: todos.concat({
+                    ...action.item,
+                    id: todoId++,
+                    checked: false,
+                })
+            }
+        default:
+            return state;
+    }
+}
+
+export default todoReducer;

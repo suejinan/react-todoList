@@ -1,0 +1,49 @@
+import React, { Component } from 'react';
+
+class TodoItem extends Component {
+    render() {
+
+        /**
+         * text: 할 일 내용
+         * todoId: 할 일 id
+         * checked: 할 일 체크 여부
+         * onToggle: 할 일 내용 영역 토글
+         * onRemove: 할 일 삭제
+         */
+        const { text, todoId, checked, onToggle, onRemove } = this.props;
+
+        return (
+            <div className="todo-item">
+                <div className="shadow-none p-3 mb-5 rounded" onClick={() => onToggle(todoId)}>
+                    { checked ?
+                        <span>
+                            <i className="far fa-check-circle"></i>&nbsp;
+                            <del style={{margin: "0 10px"}}>{text}</del>
+                        </span>
+                        :
+                        <span>
+                            <i className="far fa-circle"></i>&nbsp;
+                            <span style={{margin: "0 10px"}}>{text}</span>
+                        </span>
+                    }
+
+                    {/* 상세 페이지 팝업 연동 */}
+                    <span>
+                        <i class="far fa-file-alt" onClick={(e) => {e.stopPropagation(); alert('상세 팝업 연동 예정')}}></i>
+                    </span>
+
+                    {/* 할 일 삭제 버튼 */}
+                    <span className="todo-item-remove"
+                        onClick={(e) => { 
+                            e.stopPropagation();
+                            onRemove(todoId)}}>
+                        <i className="fas fa-times"/>
+                    </span>
+                </div>
+                
+            </div>
+        );
+    }
+}
+
+export default TodoItem;

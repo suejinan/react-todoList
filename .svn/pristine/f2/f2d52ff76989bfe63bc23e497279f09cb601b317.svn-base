@@ -1,0 +1,29 @@
+import React from 'react';
+import GroupFormContainer from '../containers/GroupFormContainer';
+import GroupListContainer from '../containers/GroupListContainer';
+import {NavLink} from 'react-router-dom';
+
+const MenuBar = () => {
+    return(
+        <div className="menuBar">        
+            <div className="menu_bar_today">
+                <NavLink exact to="/today" activeClassName="active">today</NavLink>
+            </div>
+            <div className="menu_bar_next_seven_day">
+                <NavLink exact to="/nextSevenDay" activeClassName="active">next 7 days</NavLink>
+            </div>
+            <div className="menu_bar_my_groups">
+                <NavLink exact to="/myGroups" activeClassName="active">my groups</NavLink>
+                <div className="group_list">
+
+                </div>
+            </div>
+            <div className="menu_bar_plus_icon">
+                <GroupFormContainer/>
+                <GroupListContainer/>
+            </div>
+        </div>
+    );
+};
+
+export default MenuBar;

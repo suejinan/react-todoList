@@ -1,0 +1,127 @@
+import React, { Component } from 'react';
+
+import TodoForm from './TodoForm';
+import TodoItem from './TodoItem';
+
+class TodoList extends Component{
+
+    state = {
+        todoValue: ''
+    };
+
+    /**
+     * Enter Key 이벤트
+     */
+    onKeyPress = (e) => {
+        if(e.key === 'Enter'){
+            this.onCreateTodo();
+        }
+    }
+
+    /**
+     * 할 일 값 핸들링
+     */
+    handleTodoItem = (e) => {
+        this.setState({
+            todoValue: e.target.value
+        });
+    }
+
+    /**
+     * 할 일 추가 
+     */
+    onCreateTodo = () => {
+        this.props.onCreateTodo(this.state.todoValue);
+        this.setState({
+            todoValue: ''
+        });
+    }
+
+    /**
+     * 할 일 내용 영역 토글 
+     */
+    handleToggle = (todoId) => {
+        this.props.handleToggle(todoId);
+    }
+
+    /**
+     * 할 일 삭제
+     */
+    onRemove = (todoId) => {
+        this.props.onRemove(todoId);
+    }
+    
+    /**
+     * 완료된 할 일 일괄 삭제
+     */
+    removeAllTodos = (todos) => {
+        this.props.removeAllTodos(todos);
+    }
+    
+    /* 
+     * 상세 편집 팝업(구현예정)
+    */
+    onEdit = (todoId) => {
+        this.props.toggleModal();
+        this.props.setEditItem(todoId);
+    }
+
+    /**
+     * 서브 할 일 토글 
+    */
+    onSubToggle = (todo) => this.props.handleSubToggle(todo);
+    
+    /**
+     * 서브 할 일 삭제
+    */
+    onDelSubItem = (todo) => this.props.removeSubTodoItem(todo);
+
+    render(){
+        const { todoValue } = this.state;
+        const { handleTodoItem, onCreateTodo, onKeyPress, handleToggle, onRemove, removeAllTodos } = this;
+        const { todoList, groupName } = this.props;
+
+        return(
+            <div>
+                <h2>{groupName}</h2>
+                <div>
+                    <button type="button" className="btn btn-light clear-btn"
+                        onClick={() => removeAllTodos(todoList)}
+                    >완료된 할 일 삭제</button>
+                </div>
+                <hr/>
+
+                {/* 추가한 할 일 리스트*/}
+                <div className="todo-list-box">
+                    {
+                        todoList.map(
+                            ({id, text, checked, subText}) => (
+                                <TodoItem
+                                    key={id}
+                                    todoId={id}
+                                    text={text}
+                                    subText={subText}
+                                    onToggle={handleToggle}
+                                    checked={checked}
+                                    onRemove={onRemove}
+                                    onEdit={this.onEdit}
+                                    onDelSubItem={this.onDelSubItem}
+                                    onSubToggle={this.onSubToggle}
+                                />
+                            )
+                        )
+                    }
+                </div>
+                {/* 할 일 추가 폼 */}
+                <TodoForm
+                    value={todoValue}
+                    onChange={handleTodoItem}
+                    onCreate={onCreateTodo}
+                    onKeyPress={onKeyPress}
+                />
+            </div>
+        )
+    }
+}
+
+export default TodoList;

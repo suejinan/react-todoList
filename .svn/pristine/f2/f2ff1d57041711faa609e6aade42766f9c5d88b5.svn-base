@@ -1,0 +1,11 @@
+import * as types from './ActionTypes';
+
+export const handleChange = (groupName) => ({
+    type: types.HANDLE_CHANGE,
+    groupName
+});
+
+export const setGroupList = (groups) => ({
+    type: types.SET_GROUP_LIST,
+    groups
+});

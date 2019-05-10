@@ -1,0 +1,35 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import TodoList from '../components/Todo/TodoList';
+import * as todoActions from '../actions/todo';
+
+class GroupTodoContainer extends Component{
+    render(){
+        return(
+            <div>
+                <TodoList
+                    onCreateTodo={this.props.onCreateTodo}
+                    todoItem={this.props.todoList}
+                />
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = (state) => ({
+    todoList: state.todoReducers.todos
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onCreateTodo: (todo) => {
+        dispatch(todoActions.addTodoItem(todo))
+    }
+});
+
+const TodoFormContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(GroupTodoContainer);
+
+export default TodoFormContainer;

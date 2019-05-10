@@ -1,0 +1,131 @@
+import React, {Component} from 'react';
+
+const style1 = {
+    width: '600px',
+    display: 'inline'
+  
+}
+const style2 = {
+    display: 'inline',
+    width: '30px',
+    height: '30px',
+    background: 'lightgray',
+    marginLeft: '10px',
+    color: '#333'
+}
+const style3 = {
+    display: 'inline',
+    width: '30px',
+    height: '35px',
+    marginLeft: '-31px',
+    marginBottom: '5px'
+}
+const style4 = {
+    width: '600px',
+    height: '30px',
+    display: 'inline',
+    marginLeft: '10px'
+  
+}
+
+class TodayTab extends Component {    
+    constructor() {
+        super();
+        this.state = {
+            name:"",
+            holders: [{name: ""}],   
+            subItem:"",
+            Items: [{subItem: ""}]       
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleKeyPress = e => {
+        if(e.key === 'Enter') {
+          this.handleSubmit(e);
+        };
+    }
+    handleSubmit = e => {
+        e.preventDefault();
+        if(this.state.holders) {
+            this.props.onAddSubItem(this.state.holders);
+        }
+        return this.setState({holders: ""});
+      };
+    add = () => {
+       
+        this.setState({
+            holders: this.state.holders.concat([{ name: "" }])
+        });
+    };
+    
+    subAdd = () => {
+       
+        this.setState({
+            Items: this.state.Items.concat([{ subItem: "" }])
+        });
+    };
+
+    handleShareholderNameChange = idx => evt => {
+        const newholders = this.state.holders.map((holder, sidx) => {
+          if (idx !== sidx) return holder;
+          return { ...holder, name: evt.target.value };
+        });
+    
+        this.setState({ holders: newholders });
+
+     
+      };
+
+   handleChange = idx => evt => {
+    const newholders = this.state.holders.map((holder, sidx) => {
+        if(idx !== sidx) return holder;
+        return{...holder, name:evt.target.value};
+    });
+    this.setState({ holders: newholders});
+};
+    handleRemoveShareholder = idx => () => {
+        this.setState({
+            holders: this.state.holders.filter((s, sidx) => idx !== sidx)
+        });
+  
+    };
+    handleRemove = idx => () => {
+        this.setState({
+            Items: this.state.Items.filter((s, sidx) => idx !== sidx)
+        })
+    }
+    
+    render(){
+        return(
+            <form onSubmit={this.handleSubmit}>
+             {this.state.holders.map((holder, idx) => (
+            <div className="holder">
+            <br></br>           
+            <input type="text" key = "holders"  className ="form-control" style={style1}   float ="left" placeholder = "Today Task.."
+              value={holder.name} onChange={this.handleShareholderNameChange(idx)} onSubmit = {this.handleSubmit} onKeyPress = {this.handleKeyPress}/>           
+               <input type="button" name="name" className="btn" value="V" onAddSubItem={this.handleSubmit} style = {style3} onClick = {this.subAdd}/>   
+            <button type="button" onClick={this.handleRemoveShareholder(idx)} className="btn" style = {style2}>-</button>
+            <td></td>
+            {this.state.Items.map((Items, idx) => (
+                <div>
+                     <td></td>
+              <input type="text" key = "Items" value={Items.subItem} className ="form-control" style={style4}  placeholder ="SubTask" onChange={this.handleChange()}></input>     
+              <button type="button" onClick={this.handleRemove(idx)} className="btn" style = {style2}>-</button>
+              </div>
+            ))}
+             </div>
+             
+             ))}
+              
+            
+                
+                <button type = "button" onClick = {this.add} className="btn btn-outline-primary" padding = "5px">작업추가</button>
+              <button type = "button" onAddSubItem= {this.props.handleSubmit} className = "btn" padding = "5px" marginLeft = "100px" >Submit</button>
+
+             </form>
+            
+        );
+    }
+}
+
+export default TodayTab;

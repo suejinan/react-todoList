@@ -1,0 +1,16 @@
+import React, { Component } from 'react';
+
+class TodoItem extends Component {
+    render() { 
+        const { text } = this.props;    // 추가한 할 일
+
+        return (
+            <div class="shadow-none p-3 mb-5 bg-light rounded">
+                <i className="far fa-circle"></i>&nbsp;
+                <span style={{margin: "0 10px"}}>{text}</span>
+            </div>
+        );
+    }
+}
+
+export default TodoItem;

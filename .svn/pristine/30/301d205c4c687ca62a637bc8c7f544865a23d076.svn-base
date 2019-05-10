@@ -1,0 +1,43 @@
+import React, { Component } from 'react';
+import TodoItem from '../Todo/TodoItem';
+
+export default class TodoUncompletedList extends Component {
+    /**
+     * 할 일 내용 영역 토글 
+     */
+    handleToggle = (todoId) => {
+        this.props.TodoActions.handleToggle(todoId);
+    }
+
+    /**
+     * 할 일 삭제
+     */
+    onRemove = (todoId) => {
+        this.props.TodoActions.removeTodoItem(todoId);
+    }
+
+    render() {
+        const { dayItem } = this.props;
+        
+        return (
+            <div>
+                {
+                    dayItem.length ?
+                        dayItem.map(({id, text, checked, date})=>(
+                            this.props.date === date &&
+                                !checked &&
+                                <TodoItem 
+                                    key={id}
+                                    todoId={id}
+                                    text={text}
+                                    checked={checked}
+                                    onToggle={this.handleToggle}
+                                    onRemove={this.onRemove}
+                                />
+                        ))
+                    : ''
+                }
+            </div>
+        )
+    }
+}

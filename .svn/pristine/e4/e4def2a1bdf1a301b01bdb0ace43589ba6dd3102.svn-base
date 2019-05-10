@@ -1,0 +1,21 @@
+/*
+ * Create/Modify Todo 
+*/
+
+// Toggle Window View
+export const TOGGLE_MODAL = 'TOGGLE_MODAL';
+// Sub Task
+export const TOGGLE_SUBITEM = 'TOGGLE_SUBITEM';
+export const ADD_SUBITEM = 'ADD_SUBITEM';
+export const DEL_SUBITEM = 'DEL_SUBITEM';
+export const INIT_SUBITEM = 'INIT_SUBITEM';
+
+// Create Item
+export const CREATE_ITEM_MODAL = 'CREATE_ITEM_MODAL';
+
+export const toggleModal = () => ({type: TOGGLE_MODAL});
+export const toggleSubItem = subId => ({type: TOGGLE_SUBITEM, subId});
+export const addSubItem = itemValue => ({type: ADD_SUBITEM, itemValue});
+export const delSubItem = subId => ({type: DEL_SUBITEM, subId});
+export const initSubItem = () => ({type: INIT_SUBITEM});
+export const createItemModal = item => ({type: CREATE_ITEM_MODAL, item});

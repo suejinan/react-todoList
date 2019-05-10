@@ -1,0 +1,72 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import TodoList from '../components/Todo/TodoList';
+import * as todoActions from '../actions/todo';
+import * as modalActions from '../actions/modal'
+
+class TodoContainer extends Component{
+    render(){
+        return(
+            <div>
+                <TodoList
+                    onCreateTodo={this.props.onCreateTodo}
+                    todoList={this.props.todoList}
+                    handleToggle={this.props.handleToggle}
+                    onRemove={this.props.onRemoveTodo}
+                    groupName={this.props.groupName}
+                    groupId={this.props.groupId}
+                    removeAllTodos={this.props.removeAllTodos}
+                    toggleModal={this.props.toggleModal}
+                    setEditItem={this.props.setEditItem}
+                    handleSubToggle={this.props.handleSubToggle}
+                    removeSubTodoItem={this.props.removeSubTodoItem}
+                    showTodoList={this.props.showTodoList}
+                />
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = (state) => ({
+    todoList: state.todoReducers.groupTodos,
+    groupName: state.todoReducers.groupName,
+    groupId: state.todoReducers.groupId
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onCreateTodo: (todo, groupId) => {
+        dispatch(todoActions.addTodoItem(todo, groupId))
+    },
+    handleToggle: (todoId, groupId) => {
+        dispatch(todoActions.handleToggle(todoId, groupId))
+    },
+    onRemoveTodo: (todoId, groupId) => {
+        dispatch(todoActions.removeTodoItem(todoId, groupId))
+    },
+    removeAllTodos: (todos, groupId) => {
+        dispatch(todoActions.removeAllTodos(todos, groupId))
+    },
+    toggleModal: () => {
+        dispatch(modalActions.toggleModal())
+    },
+    setEditItem: (todoId) => {
+        dispatch(modalActions.setEditItem(todoId));
+    },
+    handleSubToggle: (todo) => {
+        dispatch(todoActions.handleSubToggle(todo))
+    },
+    removeSubTodoItem: (todo) => {
+        dispatch(todoActions.removeSubTodoItem(todo))
+    },
+    showTodoList: (groupId, groupName) => {
+        dispatch(todoActions.showTodoList(groupId, groupName))
+    }
+});
+
+const TodoFormContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TodoContainer);
+
+export default TodoFormContainer;

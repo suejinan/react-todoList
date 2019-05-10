@@ -1,0 +1,28 @@
+import * as types from '../actions/todo';
+
+/**
+ * todo 컴포넌트 Reducer
+ */
+
+let todoId = 1
+const initialState = {
+    todos: [
+        { id: 0, text: '기본 할 일' }
+    ]
+};
+
+const groupReducers = (state = initialState, action) => {
+    switch(action.type){
+        case types.ADD_TODO_ITEM :
+            return {
+                todos: state.todos.concat({
+                    id: todoId++,
+                    text: action.todo
+                }),
+            };
+        default:
+            return state;
+    }
+}
+
+export default groupReducers;

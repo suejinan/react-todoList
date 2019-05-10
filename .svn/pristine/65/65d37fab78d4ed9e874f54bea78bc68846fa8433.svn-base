@@ -1,0 +1,15 @@
+import React, { Component } from 'react';
+
+class GroupList extends Component {
+    render() {    
+        const { text } = this.props;    // 추가한 그룹 이름
+
+        return (
+            <div>
+                {text}
+            </div>
+        );
+    }
+}
+
+export default GroupList;

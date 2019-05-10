@@ -1,0 +1,14 @@
+import React from 'react';
+
+const GroupForm = ({value, onChange, onCreate, onKeyPress}) => {
+    return(
+        <div>
+            <input value={value} onChange={onChange} onKeyPress={onKeyPress}/>
+            <div onClick={onCreate} class="btn btn-light">
+                추가
+            </div>
+        </div>
+    )
+}
+
+export default GroupForm;

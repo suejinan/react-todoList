@@ -1,0 +1,180 @@
+/**
+* Template CSS
+*/
+
+.navbar {
+    height:80px;
+}
+
+div.nav-pills {
+    position: fixed;
+}
+
+.menubar {
+    padding-left: 0px;
+    margin-top: 80px;
+}
+
+.sidebar {
+    background-color: #f1f1f1;
+    height: 680px;
+}
+
+.sidebar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.sidebar a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+.container {
+    margin-top: 28px;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: 0px;
+    margin-top: 0px;
+}
+
+.content {
+    margin-top: 10px;
+    margin-left: 260px; 
+    padding: 40px 40px;
+}
+
+
+/**
+* Group list CSS
+*/
+
+.group-insert-form {
+    border:0;
+    background-color: #e0dfdf;
+    float:left;
+    width:80%;
+    margin-right: 0.7rem;
+    margin-top: 0.5rem;
+    height: 32px;
+}
+
+.group-plus-circle {
+    color: rgb(204, 204, 204);
+    padding-top: 1rem
+}
+
+.group-form{
+    margin-top: 0.5rem;
+    margin-left: 0.08rem;
+}
+
+.group-list {
+    margin-top: 0.5rem;
+    margin-left: 0.08rem;
+    background-color: #e6e6e6;
+}
+
+.group-item {
+    color: black;
+    font-weight: 500;
+}
+
+.group-item:hover {
+    color: #4CAF50;
+}
+
+.group-item + .group-item {
+    padding: 2px;
+    border-top: 1px dashed #ffffffef;
+}
+
+.group-item-remove {
+    visibility: hidden;
+    color: #a8a8a8
+}
+
+.group-item:hover .group-item-remove {
+    visibility: visible;
+}
+
+.fa-times-circle {
+    float: right;
+    padding: 5px;
+}
+
+
+/**
+* Todo List Content CSS
+*/
+
+.todo-insert-form {
+    border:0;
+    background-color: #ffffff;
+    float:left;
+    width:50%;
+}
+
+.todo-list-box{
+    width: 80%; 
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.list-sub-group{
+    margin-left: 2rem;
+}
+
+.mb-5, .my-5 {
+    margin-bottom: 0.5rem!important;
+}
+
+.todo-item {
+    background-color: rgb(233, 233, 233);
+}
+
+.todo-item:hover {
+    background-color: rgb(182, 240, 185);
+}
+
+.todo-item + .todo-item {
+    border-top: 1px solid #f1f3f5bb;
+}
+
+.todo-item-remove {
+    visibility: hidden;
+    color: #ff0000
+}
+
+.todo-item:hover .todo-item-remove {
+    visibility: visible;
+    float:right;
+}
+
+.fa-file-alt {
+    visibility: hidden;
+}
+
+.todo-item:hover .fa-file-alt {
+    visibility: visible;
+    color: #707070
+}
+
+.todo-subitemList {
+    font-size: 0.8em;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.clear-btn {
+    margin-left: 80%;
+}

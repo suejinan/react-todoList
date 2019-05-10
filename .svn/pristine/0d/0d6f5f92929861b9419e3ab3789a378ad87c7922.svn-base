@@ -1,0 +1,21 @@
+import React from 'react';
+import '../../styles/Modal.css';
+import Form from './Form';
+
+const Modal = props => {
+    if(!props.showModal) { return null }
+
+    return(
+        <div role="button" className="Backdrop">
+            <div className="Addmodal">
+                <h3 onClick={props.ModalActions.toggleModal} className="close">&times;</h3>
+                <Form 
+                    {...props}
+                    onCreate ={props.onCreate}
+                />
+            </div>
+        </div>
+    )
+}
+
+export default Modal;

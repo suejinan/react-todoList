@@ -1,0 +1,24 @@
+import React from 'react';
+import '../styles/TodoListTemplate.css';
+
+import ModalContainer from '../containers/ModalContainer';
+//import SearchBoxContainer from '../containers/SearchBoxContainer';
+
+const TopBar = () => {
+    return(
+        <div>
+            {/* 새 할일 생성 영역 (팝업 창 연동) */}
+            <div className="navi_new_title">
+                <ModalContainer/>
+            </div>
+            
+            {/* 검색 영역        
+            <SearchBoxContainer/>
+            <div className="navi_searchBox">
+                {searchBox}
+            </div> */}
+        </div>
+    );
+};
+
+export default TopBar;

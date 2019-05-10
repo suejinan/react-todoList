@@ -1,0 +1,15 @@
+import { 
+} from '../actions/week';
+
+const initialState = {
+    dayItems: []
+};
+
+const WeekReducer = (state=initialState, action) => {
+    switch(action.type) {
+        default:
+            return state;
+    }
+};
+
+export default WeekReducer;

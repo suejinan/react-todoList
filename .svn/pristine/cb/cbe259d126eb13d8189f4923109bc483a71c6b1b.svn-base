@@ -1,0 +1,33 @@
+import React, { Component } from 'react';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+
+import TodoListTemplate from './TodoListTemplate';
+import TopBar from './TopBar';
+import MenuBar from './MenuBar';
+import Test from './Test';
+import NextSevenDays from './Week/NextSevenDays';
+import GroupTodoForm from './MyGroups/GroupTodoForm';
+
+import '../styles/TodoListTemplate.css';
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <TodoListTemplate nav={<TopBar/>} sidebar={<MenuBar/>}>
+            <div className="content">
+                <Switch>
+                  <Route path="/today" component={Test}/>
+                  <Route exact path="/nextSevenDay" component={NextSevenDays}/>
+                  <Route exact path="/myGroups" component={GroupTodoForm}/>
+                </Switch>
+            </div>
+          </TodoListTemplate>
+        </div>
+      </Router>
+    );
+  }
+}
+
+export default App;

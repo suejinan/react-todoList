@@ -1,0 +1,64 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import TodayTab2 from '../Today/TodayTab2';
+import * as Today from '../actions/Today';
+import * as modalActions from '../actions/modal';
+
+class TodayContainer extends Component{
+    render(){
+        return(
+            <div>  
+            <TodayTab2
+                    onCreateTodo={this.props.onCreateTodo}
+                    handleToggle={this.props.handleToggle}
+                    onRemove={this.props.onRemoveTodo}               
+                    showTodoList={this.props.showTodoList}
+                    removeAllTodos={this.props.removeAllTodos}
+                    toggleModal={this.props.toggleModal}
+                    handleSubToggle={this.props.handleSubToggle}
+                    setEditItem={this.props.setEditItem}
+                    groupTodos={this.props.groupTodos}
+                />
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = (state) => ({
+    TodayList: state.todayReducers.todayList,
+    TodayItem: state.todayReducers.TodayItem,
+    groupTodos: state.todayReducers.groupTodos,
+    editTodo: state.todoReducers.editTodo
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onCreateTodo: (todo, TodayItem) => {
+        dispatch(Today.addTodoItem(todo, TodayItem))
+    },
+    handleToggle: (todoId) => {
+        dispatch(Today.handleToggle(todoId))
+    },
+    onRemoveTodo: (todoId) => {
+        dispatch(Today.removeTodoItem(todoId))
+    },
+    toggleModal: () => {
+        dispatch(modalActions.toggleModal())
+    },
+    setEditItem: (todoId) => {
+        dispatch(modalActions.setEditItem(todoId));
+    },
+    showTodoList: (TodayItem) => {
+        dispatch(Today.showTodoList(TodayItem))
+    },
+    removeAllTodos: (todos) => {
+        dispatch(Today.removeAllTodos(todos))
+    }
+});
+
+const TodayFormContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TodayContainer);
+
+export default TodayFormContainer;

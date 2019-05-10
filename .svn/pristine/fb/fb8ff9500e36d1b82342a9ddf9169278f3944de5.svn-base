@@ -1,0 +1,52 @@
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+
+import * as modalActions from '../actions/modal';
+import Modal from '../components/Modal/Modal';
+import NewButton from '../components/TopBar/newBtn';
+
+class ModalContainer extends Component {
+
+    handleToggle = () => {
+        //TempSubTask Init
+        this.props.ModalActions.initSubItem();
+        this.props.ModalActions.toggleModal();
+    };
+    handleCreate = (item) => {
+        item = {
+            ...item,
+            subTask: this.props.subTask
+        }
+        //newTask 넘기기
+        console.log(item);
+        this.handleToggle();
+    };
+    
+    render() {
+
+        return(
+            <div>
+                <NewButton onClick={this.handleToggle}/>
+                <Modal 
+                    {...this.props}
+                    onCreate ={this.handleCreate}
+                />
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = state => ({
+    ...state.modalReducer,
+    groups: state.groupReducers.groups
+});
+
+const mapDispatchToProps = dispatch => ({
+    ModalActions: bindActionCreators(modalActions, dispatch)
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ModalContainer);

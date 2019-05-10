@@ -1,0 +1,27 @@
+import React, { Component } from 'react';
+
+class GroupList extends Component {
+    render() {    
+        const { text, groupId, onRemove } = this.props;    // 추가한 그룹 이름
+
+        return (
+            <div className="group-item">
+                {text}
+                { 
+                    /* 기본 그룹 삭제 불가 */
+                    groupId !== 0 &&
+                    <span className="group-item-remove"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onRemove(groupId)
+                        }}
+                    >&nbsp;
+                        <i class="far fa-times-circle"></i>
+                    </span>
+                }
+            </div>
+        );
+    }
+}
+
+export default GroupList;

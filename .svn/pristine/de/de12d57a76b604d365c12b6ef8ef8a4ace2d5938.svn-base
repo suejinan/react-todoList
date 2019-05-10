@@ -1,0 +1,5 @@
+.day-card {
+    min-height: 550px;
+    min-width: 290px;
+    margin-right: 10px;
+}

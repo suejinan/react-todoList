@@ -1,0 +1,23 @@
+import React, { Component } from 'react';
+import TodoUncompletedList from './TodoUncompletedList';
+import TodoCompletedList from './TodoCompletedList';
+import Form from './Form';
+import '../../styles/Week.css';
+
+class Day extends Component {
+
+  render() {
+    return (
+      <div className="card">
+        <div className="card-body">
+            <h5 className="card-title">Card title</h5>
+            <TodoUncompletedList items={this.props.items}/>
+            <Form />
+            <TodoCompletedList items={this.props.items}/>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Day;

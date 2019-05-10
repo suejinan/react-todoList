@@ -1,0 +1,90 @@
+import React, { Component } from 'react';
+import TodoTabForm from './TodoTabForm';
+import TodayItem from './TodayItem';
+
+
+class TodayTab2 extends Component {
+  
+  constructor(props){
+    super(props);
+    this.state = {
+       todoValue: ''
+    };
+  }
+
+  onKeyPress = (e,TodayItem) => {
+    if(e.key === 'Enter') this.onCreateTodo(TodayItem);
+  }
+
+  handleTodoItem = (e) => {
+    this.setState({
+      todoValue: e.target.value});
+  }
+
+  onCreateTodo = (TodayItem) => {
+      this.props.onCreateTodo(this.state.todoValue, TodayItem);
+      this.setState({ 
+        todoValue: '' 
+      });
+  }
+  onEdit = (todoId,TodayItem) => {
+    this.props.toggleModal(todoId,TodayItem);
+    this.props.setEditItem(todoId,TodayItem);
+  }
+
+  onRemove = (todoId, TodayItem) => {
+   this.props.onRemove(todoId, TodayItem);
+  }
+  showTodoList = (todoId, TodayItem) => {
+    this.props.showTodoList(todoId, TodayItem);
+  }
+  removeAllTodos = (todos, groupId) => {
+    this.props.removeAllTodos(todos, groupId);
+}
+
+
+  render() {
+    const { todoValue } = this.state;
+    const { handleTodoItem, onCreateTodo, onKeyPress, handleToggle, onRemove , showTodoList, removeAllTodos} = this;
+    const {  groupTodos} = this.props;
+    console.log("groupTodos: ", groupTodos);
+
+    return (
+
+        <div className="card-body">
+          <hr/>
+              {/* 추가한 할 일 리스트*/}
+              <div className="todaylist">
+                    {
+                        groupTodos.map(
+                            ({id, text,  subText}) => (
+                                <TodayItem
+                                    key={id}
+                                    todoId={id}
+                                    text={text}
+                                    onToggle={handleToggle}
+                                    onRemove={onRemove}
+                                    onEdit = {this.onEdit}   
+                                    subText = {subText}                      
+                                    showTodoList = {showTodoList}
+                                    removeAllTodos = {removeAllTodos}
+                                />
+                            )
+                        )
+                    }
+                </div>
+          <TodoTabForm
+            value={todoValue}
+            onChange={handleTodoItem}
+            onCreate={onCreateTodo}
+            onKeyPress={onKeyPress}
+            onCreateTodo={onCreateTodo}
+           />
+        </div>
+      
+    );
+  }
+}
+
+
+export default TodayTab2;

@@ -1,0 +1,13 @@
+/*
+ * Manage Todos in NextSevenDays 
+*/
+
+// init DayItems
+export const SET_DAYITEMS = 'SET_DAYITEMS';
+//Todos
+export const CLEAR_COMPLETED_ITEM = 'CLEAR_COMPLETED_ITEM';
+export const CREATE_ITEM_DATE = 'CREATE_ITEM_DATE';
+
+export const setDayItems = value => ({type: SET_DAYITEMS, value})
+export const clearCompletedItem = () => ({type: CLEAR_COMPLETED_ITEM});
+export const createItemDate = item => ({type: CREATE_ITEM_DATE, item});

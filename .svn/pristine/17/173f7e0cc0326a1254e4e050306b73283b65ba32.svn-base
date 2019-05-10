@@ -1,0 +1,211 @@
+import * as types from '../actions/todo';
+import { CREATE_ITEM_MODAL, SET_EDIT_ITEM, EDIT_ITEM, CANCEL_EDIT } from '../actions/modal';
+import { CREATE_ITEM_DATE } from '../actions/week';
+
+/**
+ * todo 컴포넌트 Reducer
+ */
+
+let todoId = 2
+const initialState = {
+
+    /**
+     * todos 객체 프로퍼티 값
+     * 
+     * - id: 할 일 id,
+     * - text: 할 일 내용
+     * - checked: 할 일 체크 여부
+     * - subText: 서브 할 일 내용
+     * - groupId: 할 일 그룹 id
+     * - date: 할 일 날짜
+     * - memo: 할 일 메모
+     */
+    todos: [
+            {   id: 0, text: '할 일 1', checked: false, 
+                subText: [], 
+                groupId: 0,
+                date: '2019-04-22', memo: '', isImportant: true
+            },
+            {   id: 1, text: '할 일 2', checked: false, 
+                subText: [{id: 0, text:'서브 할 일1', checked: false}], 
+                groupId: 0,
+                date: '2019-04-23', memo: '', isImportant: true
+            }
+    ],
+    groupTodos: [],
+    editTodo: {},
+};
+
+const todoReducer = (state = initialState, action) => {
+    const {todos} = state;
+
+    switch(action.type){
+        // 할 일 추가
+        case types.ADD_TODO_ITEM :
+            state = {
+                todos : state.todos.concat({
+                    id: todoId++,
+                    text: action.todo,
+                    checked: false,
+                    subText: [],
+                    groupId: action.groupId,
+                    date: '',
+                    memo: '',
+                    isImportant: false
+                }),
+                groupName : state.groupName,
+            }
+            state.groupTodos = [...state.todos]
+            return {
+                ...state,
+                groupId : action.groupId,
+                groupTodos: state.groupTodos.filter(todo => todo.groupId === action.groupId)
+            };
+        // 할 일 목록 토글 기능
+        case types.HANDLE_TOGGLE :
+            const index = todos.findIndex(todoItem => todoItem.id === action.todoId);
+            const selected = todos[index];   //선택한 할 일 객체
+
+            const nextTodoList = [...todos]; // todoList 배열 복사
+            nextTodoList[index] = {
+                ...selected,
+                checked: !selected.checked
+            };
+
+            state = {
+                todos: nextTodoList,
+                groupName: state.groupName,
+                groupId: action.groupId
+            }
+
+            return {
+                ...state,
+                groupTodos: nextTodoList.filter(todo => todo.groupId === action.groupId)
+            };
+        // 할 일 삭제
+        case types.REMOVE_TODO_ITEM :
+            state = {
+                todos: todos.filter(todo => todo.id !== action.todoId),
+                groupName: state.groupName,
+                groupId: action.groupId
+            }
+            state.groupTodos = [...state.todos]
+            return {
+                ...state,
+                groupTodos: state.groupTodos.filter(todo => todo.groupId === action.groupId)
+            }
+        // 할 일 조회 (그룹 별 조회)
+        case types.SHOW_TODO_LIST :
+            const copyTodos = [...todos];
+            // 현재 그룹 세팅
+            state.groupName = action.groupName;
+            return {
+                ...state,
+                groupName: state.groupName,
+                groupId: action.groupId,
+                groupTodos: copyTodos.filter(todo => todo.groupId === action.groupId)
+            }
+        // 완료된 할 일 일괄 삭제
+        case types.REMOVE_ALL_TODOS :
+            state = {
+                todos: todos.filter(todo => todo.checked !== action.todoId && todo.checked === false),
+                groupName: state.groupName,
+                groupId: action.groupId
+            }
+            state.groupTodos = [...state.todos]
+        return {
+            ...state,
+            groupTodos: state.groupTodos.filter(todo => todo.groupId === action.groupId)
+        }
+
+        // Create Item (Modal)
+        case CREATE_ITEM_MODAL: 
+            return {
+                ...state,
+                todos: todos.concat({
+                    ...action.item,
+                    id: todoId++,
+                    checked: false,
+                })
+            }
+        case CREATE_ITEM_DATE:
+            return {
+                ...state,
+                todos: todos.concat({
+                    ...action.item,
+                    id: todoId++,
+                    checked: false,
+                    groupId: 0,
+                    subText: [],
+                    isImportant: false
+                })
+            }
+            
+        // Edit Item (Modal)
+        case SET_EDIT_ITEM:
+            return {
+                ...state,
+                editTodo: state.todos[todos.findIndex(todo => todo.id === action.todoId)]
+                // editTodo: state.todos.filter(todo => todo.id === action.todoId)
+            }
+
+        case EDIT_ITEM: {
+            const todos = state.todos.map(item => {
+                if (item.id === action.item.id) {
+                  item = action.item;
+                }
+                return item;
+            });
+            state = {
+                groupTodos: todos,
+                groupName: state.groupName,
+                groupId: state.groupId
+            }
+            return {
+                ...state,
+                todos,
+                editTodo: []
+            }
+        }
+
+        case CANCEL_EDIT: 
+            return {
+                ...state,
+                editTodo: null,
+            }
+        
+        // 서브 할 일 토글 기능
+        case types.HANDLE_SUBTOGGLE :
+            let idx = todos.findIndex(todoItem => todoItem.id === action.todo.id);
+            let selectTodo = todos[idx];   //선택한 할 일 객체
+            let copyTodoList = [...todos]; // todoList 배열 복사
+            copyTodoList[idx] = {
+                ...selectTodo,
+                subText: selectTodo.subText.map(item => {
+                    if(item.id === action.todo.subText.id) {
+                        item.checked = !item.checked;
+                    }
+                    return item
+                })
+            };
+
+            return { ...state, todos: copyTodoList }
+
+        // 서브 할 일 삭제
+        case types.REMOVE_SUBTODO_ITEM :
+            idx = todos.findIndex(todo => todo.id === action.todo.id);
+            selectTodo = todos[idx];
+            copyTodoList = [...todos];
+            copyTodoList[idx] = {
+                ...selectTodo,
+                subText : selectTodo.subText.filter(({id}) => id !== action.todo.subText.id)
+            };
+            
+            return { ...state, todos: copyTodoList }
+
+        default:
+            return state;
+    }
+}
+
+export default todoReducer;

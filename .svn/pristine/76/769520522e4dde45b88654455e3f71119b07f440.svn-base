@@ -1,0 +1,17 @@
+import React from 'react';
+import '../styles/TodoListTemplate.css';
+
+const TodoListTemplate = ({nav, sidebar}) => {
+    return(
+        <main className="todo-list-template">
+            <nav className="navigation">
+                {nav}
+            </nav>
+            <section className="sidebar">
+                {sidebar}
+            </section>
+        </main>
+    );
+};
+
+export default TodoListTemplate;

@@ -1,0 +1,44 @@
+import React, { Component } from 'react';
+import Day from './Day';
+import '../../styles/Week.css';
+
+
+class NextSevenDays extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            today : new Date().toLocaleString(),
+            days : ['today', 'tomorrow', 'skfWI', 'djkd', 'djkdj', 'djk', 'djk'],
+            items: [
+                { id:0, title:'Todo 1', notes:'test1', endDt:'2019-04-05', checked: false , group: 'group1' },
+                { id:1, title:'Todo 2', notes:'test2', endDt:'2019-04-08', checked: true , group: 'group1' },
+                { id:2, title:'Todo 3', notes:'test3', endDt:'2019-04-09', checked: false , group: 'group1' }
+            ]
+        };
+    }
+
+    getDays = (today) => {
+        console.log(today);
+    }
+
+    componentDidMount() {
+        this.getDays(this.state.today);
+    }
+
+    render() {
+        return (
+            <div className="container-fluid">
+                <h3>NextSeven Days</h3>
+                <div className="d-flex flex-row flex-nowrap">
+                    {
+                        this.state.days.map((day, index) => (
+                            <Day key={index} date={day} items={this.state.items}/>
+                        ))
+                    }
+                </div>
+            </div>
+        );
+    }
+}
+
+export default NextSevenDays;

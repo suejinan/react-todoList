@@ -1,0 +1,32 @@
+import * as types from '../actions/ActionTypes';
+
+const initialState = {
+    groups: [
+        { id:0, groupName: '기본 그룹' }
+    ],
+    groupName: ''
+};
+
+const groupReducers = (state = initialState, action) => {
+    switch(action.type){
+        case types.HANDLE_CHANGE :
+            console.log("groupName 상태 : " + action.groupName);
+            return {
+                groups: state.groups.concat({
+                    text: state.groupName
+                }),
+                groupName: action.groupName
+            };
+        case types.SET_GROUP_LIST :
+            console.log("groups 상태 : "  + state.groups);
+            return {
+                groups: state.groups.concat({
+                    text: state.groupName
+                })
+            };
+        default:
+            return state;
+    }
+}
+
+export default groupReducers;

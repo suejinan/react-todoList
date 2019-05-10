@@ -1,0 +1,13 @@
+/**
+ * 할 일 영역 액션 및 액션 생성 함수 선언
+ */
+
+export const ADD_TODO_ITEM = 'ADD_TODO_ITEM'; // 할 일 추가 액션
+
+/**
+ * 할 일 추가 액션 생성
+ */
+export const addTodoItem = (todo) => ({
+    type: ADD_TODO_ITEM,
+    todo
+});

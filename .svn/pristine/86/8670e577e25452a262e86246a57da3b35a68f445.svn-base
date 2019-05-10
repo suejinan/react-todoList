@@ -1,0 +1,85 @@
+import React, {Component} from 'react';
+
+
+const style1 = {
+    width: '600px',
+    display: 'inline'
+  
+}
+const style2 = {
+    display: 'inline',
+    width: '30px',
+    height: '30px',
+    background: 'lightgray',
+    marginLeft: '10px',
+    color: '#333'
+}
+const style3 = {
+    display: 'inline',
+    width: '30px',
+    height: '35px',
+    marginLeft: '-31px',
+    marginBottom: '5px'
+}
+
+
+class TodayTab extends Component {
+    constructor() {
+        super();
+        this.state = {
+            name:"",
+            holders: [{name: ""}],
+
+        };
+
+    }
+
+    handleSubmit = evt => {
+        const { name, holders } = this.state;
+        alert(`Incorporated: ${name} with ${holders.length} holders`);
+      };
+    add = () => {
+       
+        this.setState({
+            holders: this.state.holders.concat([{ name: "" }])
+        });
+    };
+
+    handleShareholderNameChange = idx => evt => {
+        const newholders = this.state.holders.map((holder, sidx) => {
+          if (idx !== sidx) return holder;
+          return { ...holder, name: evt.target.value };
+        });
+    
+        this.setState({ holders: newholders });
+      };
+
+    handleRemoveShareholder = idx => () => {
+        this.setState({
+            holders: this.state.holders.filter((s, sidx) => idx !== sidx)
+        });
+    };
+    
+    render(){
+        return(
+            <form onSubmit={this.handleSubmit}>
+             {this.state.holders.map((holder, idx) => (
+            <div className="holder">           
+            <input
+              type="text"   className ="form-control" style={style1}   float ='left' placeholder = "Today Task.."
+              value={holder.name} onChange={this.handleShareholderNameChange(idx)} onKeyDown={this.key_up}
+               />                
+               <input type="button" name="name" className="btn" value="V"  style = {style3} onClick = {this.add2}/>   
+            <button type="button" onClick={this.handleRemoveShareholder(idx)} className="btn" style = {style2}>-</button>
+             <td/>
+             </div>
+             ))}
+             <br></br>
+             <button type = "button" onClick = {this.add} className="btn btn-outline-primary" padding = "5px">작업추가</button>
+             
+             </form>
+        );
+    }
+}
+
+export default TodayTab;

@@ -1,0 +1,24 @@
+import GroupForm from '../components/GroupForm';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
+
+const mapStateToProps = (state) => ({
+    groups: state.groups,
+    groupName: state.groupName
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onChange : (e) => {
+        dispatch(actions.handleChange(e.target.value))
+    },
+    setGroupList : () => {
+        dispatch(actions.setGroupList())
+    }
+});
+
+const GroupFormContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(GroupForm);
+
+export default GroupFormContainer;

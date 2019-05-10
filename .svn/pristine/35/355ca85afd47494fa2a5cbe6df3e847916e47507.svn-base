@@ -1,0 +1,33 @@
+import React, {Component} from 'react';
+
+
+const style1 = {
+    display: 'inline',
+    width: '30px',
+    height: '30px',
+    background: 'lightgray',
+    marginLeft: '10px',
+    color: '#333'
+}
+
+const style4 = {
+    width: '600px',
+    height: '30px',
+    display: 'inline',
+    marginLeft: '10px'
+}
+class SubTodayTab extends Component{
+    state = {
+        subItem: ''
+    }
+    render(){
+        return(
+        <div>         
+        <input type="text" key = "Items" value={this.state.subItem} className ="form-control" style={style4} placeholder ="SubTask"></input>     
+        <button type="button"  className="btn" style = {style1}>-</button>
+        </div>
+        );
+    }
+}
+
+export default SubTodayTab;

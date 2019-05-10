@@ -1,0 +1,48 @@
+/**
+ * 할 일 영역 액션 및 액션 생성 함수 선언
+ */
+
+export const ADD_TODO_ITEM = 'ADD_TODO_ITEM'; // 할 일 추가 액션
+export const HANDLE_TOGGLE = 'HANDLE_TOGGLE'; // 할 일 토글(체크) 액션
+export const REMOVE_TODO_ITEM = 'REMOVE_TODO_ITEM'; // 할 일 삭제 액션
+export const SHOW_TODO_LIST = 'SHOW_TODO_LIST'; // 그룹 별 할 일 목록 조회 액션
+
+/**
+ * 할 일 추가 액션 생성
+ * 
+ * @param {*} todo
+ */
+export const addTodoItem = (todo) => ({
+    type: ADD_TODO_ITEM,
+    todo
+});
+
+/**
+ * 할 일 토글 액션 생성
+ * 
+ * @param {*} todoId 
+ */
+export const handleToggle = (todoId) => ({
+    type: HANDLE_TOGGLE,
+    todoId
+});
+
+/**
+ * 할 일 삭제 액션 생성
+ * 
+ * @param {*} todoId 
+ */
+export const removeTodoItem = (todoId) => ({
+    type: REMOVE_TODO_ITEM,
+    todoId
+});
+
+/**
+ * 그룹 별 할 일 목록 조회 액션 생성
+ * 
+ * @param {*} groupId 
+ */
+export const showTodoList = (groupId) => ({
+    type: SHOW_TODO_LIST,
+    groupId
+});

@@ -1,0 +1,22 @@
+import React from 'react';
+import '../styles/TodoListTemplate.css';
+import SearchBoxContainer from '../containers/SearchBoxContainer';
+
+const TopBar = () => {
+    return(
+        <div>
+            {/* 새 할일 생성 영역 (팝업 창 연동) */}
+            <div className="navi_new_title">new
+                <img src={require('../utils/plus-circle.png')} className="new_plus_icon" />
+            </div>
+
+            {/* 검색 영역        
+            <SearchBoxContainer/>
+            <div className="navi_searchBox">
+                {searchBox}
+            </div> */}
+        </div>
+    );
+};
+
+export default TopBar;

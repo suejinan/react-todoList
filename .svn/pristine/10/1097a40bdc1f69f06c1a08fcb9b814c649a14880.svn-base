@@ -1,0 +1,8 @@
+import groupReducers from './groupReducers';
+import { combineReducers } from 'redux';
+
+const reducers = combineReducers({
+    groupReducers
+});
+
+export default reducers;

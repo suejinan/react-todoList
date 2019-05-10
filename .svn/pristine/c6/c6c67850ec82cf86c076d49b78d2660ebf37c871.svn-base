@@ -1,0 +1,163 @@
+import * as types from '../actions/todo';
+import { CREATE_ITEM_MODAL, SET_EDIT_ITEM, EDIT_ITEM, CANCEL_EDIT } from '../actions/modal';
+import { CREATE_ITEM_DATE } from '../actions/week';
+
+/**
+ * todo 컴포넌트 Reducer
+ */
+
+let todoId = 2
+const initialState = {
+
+    /**
+     * todos 객체 프로퍼티 값
+     * 
+     * - id: 할 일 id,
+     * - text: 할 일 내용
+     * - checked: 할 일 체크 여부
+     * - subText: 서브 할 일 내용
+     * - groupId: 할 일 그룹 id
+     * - date: 할 일 날짜
+     * - memo: 할 일 메모
+     */
+    todos: [
+            {   id: 0, text: '할 일 1', checked: false, 
+                subText: [], 
+                groupId: 0,
+                date: '2019-04-22', memo: ''
+            },
+            {   id: 1, text: '할 일 2', checked: false, 
+                subText: [{id: 0, text:'서브 할 일1', checked: false}], 
+                groupId: 0,
+                date: '2019-04-23', memo: ''
+            }
+    ],
+    groupTodos: [],
+    editTodo: [],
+};
+
+const todoReducer = (state = initialState, action) => {
+    const {todos} = state;
+
+    switch(action.type){
+        // 할 일 추가
+        case types.ADD_TODO_ITEM :
+            state = {
+                todos : state.todos.concat({
+                    id: todoId++,
+                    text: action.todo,
+                    checked: false,
+                    subText: [],
+                    groupId: 0,
+                    date: '',
+                    memo: ''
+                }),
+                groupName : state.groupName
+            }
+            return {
+                ...state,
+                groupTodos: [...state.todos]
+            };
+        // 할 일 목록 토글 기능
+        case types.HANDLE_TOGGLE :
+            const index = todos.findIndex(todoItem => todoItem.id === action.todoId);
+            const selected = todos[index];   //선택한 할 일 객체
+
+            const nextTodoList = [...todos]; // todoList 배열 복사
+            nextTodoList[index] = {
+                ...selected,
+                checked: !selected.checked
+            };
+
+            state = {
+                todos : nextTodoList,
+                groupName : state.groupName
+            }
+
+            return {
+                ...state,
+                groupTodos: nextTodoList
+            };
+        // 할 일 삭제
+        case types.REMOVE_TODO_ITEM :
+            state = {
+                todos: todos.filter(todo => todo.id !== action.todoId),
+                groupName : state.groupName
+            }
+            return {
+                ...state,
+                groupTodos: [...state.todos]
+            }
+        // 할 일 조회 (그룹 별 조회)
+        case types.SHOW_TODO_LIST :
+            const copyTodos = [...todos];
+            // 현재 그룹 세팅
+            state.groupName = action.groupName;
+            return {
+                ...state,
+                groupName: state.groupName,
+                groupTodos: copyTodos.filter(todo => todo.groupId === action.groupId)
+            }
+        // 완료된 할 일 일괄 삭제
+        case types.REMOVE_ALL_TODOS :
+            state = {
+                todos: todos.filter(todo => todo.checked !== action.todoId && todo.checked === false),
+                groupName : state.groupName
+            }
+        return {
+            ...state,
+            groupTodos: [...state.todos]
+        }
+
+        // Create Item (Modal)
+        case CREATE_ITEM_MODAL: 
+            return {
+                ...state,
+                todos: todos.concat({
+                    ...action.item,
+                    id: todoId++,
+                    checked: false,
+                })
+            }
+        case CREATE_ITEM_DATE:
+            return {
+                ...state,
+                todos: todos.concat({
+                    ...action.item,
+                    id: todoId++,
+                    checked: false,
+                    groupId: 0,
+                    subText: []
+                })
+            }
+        // Edit Item (Modal)
+        case SET_EDIT_ITEM:
+            return {
+                ...state,
+                editTodo: state.todos.filter(todo => todo.id === action.todoId)
+            }
+        case EDIT_ITEM: {
+            const todos = state.todos.map(item => {
+                if (item.id === action.item.id) {
+                  item = action.item;
+                }
+                return item;
+            });
+            return {
+                ...state,
+                todos,
+                editTodo: [],
+            }
+        }
+        case CANCEL_EDIT: 
+            return {
+                ...state,
+                editTodo: [],
+            }
+            
+        default:
+            return state;
+    }
+}
+
+export default todoReducer;

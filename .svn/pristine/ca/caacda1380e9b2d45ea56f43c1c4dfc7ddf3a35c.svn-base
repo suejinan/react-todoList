@@ -1,0 +1,14 @@
+import { combineReducers } from 'redux';
+import groupReducers from './groupReducers';
+import modalReducer from './modalReducer';
+import todoReducers from './todoReducers';
+import weekReducer from './weekReducer';
+
+const reducers = combineReducers({
+    groupReducers,
+    modalReducer,
+    todoReducers,
+    weekReducer
+});
+
+export default reducers;
